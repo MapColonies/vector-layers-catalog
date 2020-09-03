@@ -1,0 +1,8 @@
+**/build/**
+**/node_modules/**
+
+*.md
+*.d.ts
+*.html
+*.yml
+.prettierrc

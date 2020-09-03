@@ -1,32 +1,32 @@
-import "./App.css";
-import React from "react";
+import React from 'react';
+import './App.css';
 
 // Import from react core components
 import {
   ThemeProvider as RMWCThemeProvider,
   RMWCProvider,
   Themes,
-} from "@map-colonies/react-core";
-import { CssBaseline } from "@map-colonies/react-components";
-import { useMediaQuery } from "@map-colonies/react-components";
-import "@map-colonies/react-core/dist/theme/styles";
-import "@map-colonies/react-core/dist/button/styles";
-import "@map-colonies/react-core/dist/tooltip/styles";
-import "@map-colonies/react-core/dist/menu/styles";
-import "@map-colonies/react-core/dist/select/styles";
-import "@map-colonies/react-core/dist/circular-progress/styles";
-import "@map-colonies/react-core/dist/typography/styles";
+} from '@map-colonies/react-core';
+import { CssBaseline } from '@map-colonies/react-components';
+import { useMediaQuery } from '@map-colonies/react-components';
+import '@map-colonies/react-core/dist/theme/styles';
+import '@map-colonies/react-core/dist/button/styles';
+import '@map-colonies/react-core/dist/tooltip/styles';
+import '@map-colonies/react-core/dist/menu/styles';
+import '@map-colonies/react-core/dist/select/styles';
+import '@map-colonies/react-core/dist/circular-progress/styles';
+import '@map-colonies/react-core/dist/typography/styles';
 
-import View from "./components/View";
+import View from './components/View';
 
 const App: React.FC = () => {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const theme = prefersDarkMode ? Themes.darkTheme : Themes.lightTheme;
 
   return (
     <RMWCProvider
       typography={{
-        body1: "p",
+        body1: 'p',
       }}
     >
       <RMWCThemeProvider options={theme}>
