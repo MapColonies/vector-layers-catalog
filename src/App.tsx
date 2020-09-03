@@ -1,26 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
+// Import from react core components
+import {
+  ThemeProvider as RMWCThemeProvider,
+  RMWCProvider,
+  Themes,
+} from '@map-colonies/react-core';
+import { CssBaseline } from '@map-colonies/react-components';
+import { useMediaQuery } from '@map-colonies/react-components';
+import '@map-colonies/react-core/dist/theme/styles';
+import '@map-colonies/react-core/dist/button/styles';
+import '@map-colonies/react-core/dist/tooltip/styles';
+import '@map-colonies/react-core/dist/menu/styles';
+import '@map-colonies/react-core/dist/select/styles';
+import '@map-colonies/react-core/dist/circular-progress/styles';
+import '@map-colonies/react-core/dist/typography/styles';
+
+import View from './components/View';
+
+const App: React.FC = () => {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const theme = prefersDarkMode ? Themes.darkTheme : Themes.lightTheme;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RMWCProvider
+      typography={{
+        body1: 'p',
+      }}
+    >
+      <RMWCThemeProvider options={theme}>
+        <CssBaseline />
+        <View />
+      </RMWCThemeProvider>
+    </RMWCProvider>
   );
-}
+};
 
 export default App;

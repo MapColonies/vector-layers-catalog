@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@map-colonies/react-components": "^2.0.0",
+    "@map-colonies/react-core": "^2.0.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -12,17 +14,27 @@
     "@types/react-dom": "^16.9.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3",
+    "react-scripts": "3.4.1",
     "typescript": "~3.7.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "eslint:fix": "npx eslint . --ext .ts,.tsx --fix",
+    "eslint:check": "npx eslint . --ext .ts,.tsx",
+    "prettier:fix": "prettier --write .",
+    "prettier:check": "prettier --check ."
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "@map-colonies/eslint-config/react",
+      "@map-colonies/eslint-config/ts-base"
+    ],
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    }
   },
   "browserslist": {
     "production": [
@@ -35,5 +47,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@map-colonies/eslint-config": "^1.1.0",
+    "prettier": "^2.1.1"
   }
 }
