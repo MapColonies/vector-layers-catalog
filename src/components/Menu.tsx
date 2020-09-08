@@ -12,7 +12,7 @@ import {
   ListItemText,
   ListItemPrimaryText,
 } from '@map-colonies/react-core';
-import { LayerState } from './View';
+import { LayerState } from '../layers';
 
 const styles = {
   fab: {

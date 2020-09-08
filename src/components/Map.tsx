@@ -11,7 +11,7 @@ import {
 } from '@map-colonies/react-components/dist/ol-map/source/mvt';
 import { Proj } from '@map-colonies/react-components/dist/ol-map/projections';
 import { StyleFunction } from 'ol/style/Style';
-import { LayerState } from './View';
+import { LayerState } from '../layers';
 
 const styles = {
   map: {
@@ -35,7 +35,7 @@ const getStyleFunc = (layers: LayerState[]): StyleFunction => {
       (layer) =>
         layer.show &&
         props.layer === layer.layer &&
-        (layer.type === undefined || props.type === layer.type)
+        (layer.type === undefined || layer.type.includes(props.type))
     );
     if (layer) return layer.style;
   };
