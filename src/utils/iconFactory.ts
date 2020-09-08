@@ -1,11 +1,11 @@
 import { Icon } from 'ol/style';
-import { osmLiberty } from '../osm-liberty';
+import { spriteMapping } from '../spriteMapping';
 
-export const iconFactory = (iconName: keyof typeof osmLiberty): Icon => {
-  const iconSprite = osmLiberty[iconName];
+export const iconFactory = (iconName: keyof typeof spriteMapping): Icon => {
+  const iconSprite = spriteMapping[iconName];
   return new Icon({
     size: [iconSprite.width, iconSprite.height],
     offset: [iconSprite.x, iconSprite.y],
-    src: 'osm-liberty.png',
+    src: 'sprites.png',
   });
 };

@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
 import { LayerState, initialState } from '../layers';
+import { LayersProvider } from '../providers/LayersProvider';
 import Menu from './Menu';
 import Map from './Map';
 
@@ -11,10 +12,10 @@ const reducer = (state: LayerState[], index: number): LayerState[] => {
 const View: React.FC = () => {
   const [layers, dispatch] = useReducer(reducer, initialState);
   return (
-    <>
-      <Map layers={layers} />
-      <Menu layers={layers} updateVisibility={dispatch} />
-    </>
+    <LayersProvider value={[layers, dispatch]}>
+      <Map />
+      <Menu />
+    </LayersProvider>
   );
 };
 

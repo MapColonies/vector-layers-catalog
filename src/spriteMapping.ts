@@ -1,4 +1,4 @@
-export const osmLiberty = {
+export const spriteMapping = {
   'aerialway-11': {
     height: 15,
     pixelRatio: 1,
