@@ -1,32 +1,17 @@
-import { spriteMapping } from './spriteMapping';
+import { LayerState, Shape } from './model/layerTypes';
 
-export interface LayerState {
-  name: string;
-  layer: string;
-  type?: string[];
-  style: LayerStyle;
-  show: boolean;
-}
-
-export interface LayerStyle {
-  stroke?: {
-    color: string;
-    width: number;
-  };
-  fill?: string;
-  icon?: keyof typeof spriteMapping;
-  point?: number;
-}
-
-export const initialState = [
+export const initialState: LayerState[] = [
   {
+    shape: Shape.LINE,
     name: 'Inter City Roads',
     layer: 'transport_lines',
+    // text: 'name',
     type: ['motorway', 'trunk', 'primary', 'secondary', 'tertiary'],
     style: { stroke: { color: 'rgb(255, 255, 255, 0.6)', width: 3 } },
     show: true,
   },
   {
+    shape: Shape.LINE,
     name: 'City Roads',
     layer: 'transport_lines',
     type: ['residential'],
@@ -34,6 +19,7 @@ export const initialState = [
     show: true,
   },
   {
+    shape: Shape.LINE,
     name: 'Footway Roads',
     layer: 'transport_lines',
     type: ['footway', 'pedestrian'],
@@ -41,48 +27,58 @@ export const initialState = [
     show: true,
   },
   {
+    shape: Shape.POLYGON,
     name: 'Parks',
     layer: 'landuse_areas',
+    text: 'name',
     type: ['park'],
     style: {
-      fill: 'rgb(204, 255, 153, 0.4)',
+      fill: { color: 'rgb(204, 255, 153, 0.4)' },
       stroke: { color: 'rgb(34, 139, 34)', width: 2 },
     },
     show: false,
   },
   {
+    shape: Shape.POINT,
     name: 'Benches',
     layer: 'amenity_points',
     type: ['bench'],
-    style: { icon: 'picnic-site-11' },
+    style: { useSprite: true, icon: 'picnic-site-11' },
     show: false,
   },
   {
+    shape: Shape.POINT,
     name: 'Restaurants',
     layer: 'amenity_points',
     type: ['fast_food', 'restaurant', 'cafe'],
-    style: { icon: 'restaurant-11' },
+    style: { useSprite: true, icon: 'restaurant-11' },
     show: false,
   },
   {
+    shape: Shape.POINT,
     name: 'Bus Stops',
     layer: 'transport_points',
     type: ['bus_stop'],
-    style: { icon: 'bus-11' },
+    style: { useSprite: true, icon: 'bus-11' },
     show: false,
   },
   {
+    shape: Shape.POINT,
     name: 'Gas Stations',
     layer: 'amenity_points',
     type: ['fuel'],
-    style: { icon: 'fuel-15' },
+    style: { useSprite: true, icon: 'fuel-15' },
     show: false,
   },
   {
+    shape: Shape.POINT,
     name: 'Traffic Lights',
     layer: 'transport_points',
     type: ['traffic_signals'],
-    style: { point: 5, fill: 'chocolate' },
+    style: {
+      useSprite: false,
+      circle: { radius: 5, fill: { color: 'chocolate' } },
+    },
     show: false,
   },
-] as LayerState[];
+];

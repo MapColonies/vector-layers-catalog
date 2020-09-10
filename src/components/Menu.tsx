@@ -25,10 +25,10 @@ const Menu: React.FC = () => {
     <>
       <Fab
         icon="layers"
-        onClick={() => setOpen(!open)}
+        onClick={(): void => setOpen(!open)}
         style={styles.fab}
       ></Fab>
-      <Drawer open={open} modal onClose={() => setOpen(false)}>
+      <Drawer open={open} modal onClose={(): void => setOpen(false)}>
         <DrawerHeader>
           <DrawerTitle>Vector Layers Catalog</DrawerTitle>
           <DrawerSubtitle>Layers:</DrawerSubtitle>
