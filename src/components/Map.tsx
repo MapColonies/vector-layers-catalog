@@ -15,6 +15,7 @@ import { Style, Circle, Fill, Stroke, Text } from 'ol/style';
 import { LayerState, Shape } from '../model/layerTypes';
 import { useLayers } from '../providers/LayersProvider';
 import { iconFactory } from '../utils/iconFactory';
+import VectorInfo from './VectorInfo';
 
 const styles = {
   map: {
@@ -105,6 +106,7 @@ const Map: React.FC = () => {
     return getStyleFunc(layers, styles);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layersString]);
+
   return (
     <div style={styles.map}>
       <OLMap projection={Proj.WEB_MERCATOR}>
@@ -114,6 +116,7 @@ const Map: React.FC = () => {
         <VectorTileLayer style={styleFunc}>
           <MVTSource options={mvtOptions} />
         </VectorTileLayer>
+        <VectorInfo />
       </OLMap>
     </div>
   );
