@@ -7,7 +7,8 @@ import {
   ListItemMeta,
 } from '@map-colonies/react-core';
 import { Popover } from '@map-colonies/react-components';
-import { ChromePicker } from 'react-color';
+import chroma from 'chroma-js';
+import { ChromePicker, RGBColor } from 'react-color';
 import { LayerState, Shape } from '../model/layerTypes';
 import { useLayers } from '../providers/LayersProvider';
 import { toggleShow, setColor } from '../actions';
@@ -31,19 +32,30 @@ interface LayerItemProps {
 const LayerItem: React.FC<LayerItemProps> = ({ layer, index }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
   const dispatch = useLayers()[1];
-  const initialColor = (): string | undefined => {
+  const initialColor = (): RGBColor | undefined => {
+    let color;
     switch (layer.shape) {
       case Shape.LINE:
-        return layer.style.stroke.color as string;
+        color = layer.style.stroke.color as string;
+        break;
       case Shape.POINT:
-        return !layer.style.useSprite
-          ? (layer.style.circle.fill?.color as string)
+        color = !layer.style.useSprite
+          ? (layer.style.circle.fill?.color as string | undefined)
           : undefined;
+        break;
       case Shape.POLYGON:
-        return layer.style.fill?.color as string;
+        color = layer.style.fill?.color as string | undefined;
+        break;
     }
+    if (color === undefined) {
+      return undefined;
+    }
+    const [r, g, b, a] = chroma(color).rgba();
+    return { r, g, b, a };
   };
-  const [pickerColor, setPickerColor] = useState(initialColor());
+  const [pickerColor, setPickerColor] = useState<RGBColor | undefined>(
+    initialColor()
+  );
   const openPicker = !!anchorEl;
   return (
     <>
@@ -57,7 +69,9 @@ const LayerItem: React.FC<LayerItemProps> = ({ layer, index }) => {
             <div
               style={{
                 ...style.colorDiv,
-                backgroundColor: pickerColor,
+                backgroundColor: `rgba(${pickerColor.r},${pickerColor.g},${
+                  pickerColor.b
+                },${pickerColor.a ?? 1})`,
               }}
               onClick={(event): void => {
                 event.stopPropagation();
@@ -79,12 +93,10 @@ const LayerItem: React.FC<LayerItemProps> = ({ layer, index }) => {
         <ChromePicker
           color={pickerColor}
           onChange={({ rgb }): void => {
-            const { r, g, b, a } = rgb;
-            setPickerColor(`rgb(${r},${g},${b},${a ?? 1})`);
+            setPickerColor(rgb);
           }}
-          onChangeComplete={({ rgb }): void => {
-            const { r, g, b, a } = rgb;
-            dispatch(setColor(index, `rgb(${r},${g},${b},${a ?? 1})`));
+          onChangeComplete={({ rgb: { r, g, b, a } }): void => {
+            dispatch(setColor(index, `rgba(${r},${g},${b},${a ?? 1})`));
           }}
         />
       </Popover>

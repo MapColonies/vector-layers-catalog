@@ -7,7 +7,7 @@ export const initialState: LayerState[] = [
     layer: 'transport_lines',
     // text: 'name',
     type: ['motorway', 'trunk', 'primary', 'secondary', 'tertiary'],
-    style: { stroke: { color: 'rgb(255, 255, 255, 0.6)', width: 3 } },
+    style: { stroke: { color: 'rgba(255, 255, 255, 0.6)', width: 3 } },
     show: true,
   },
   {
@@ -15,7 +15,7 @@ export const initialState: LayerState[] = [
     name: 'City Roads',
     layer: 'transport_lines',
     type: ['residential'],
-    style: { stroke: { color: 'rgb(204, 204, 0, 0.6)', width: 3 } },
+    style: { stroke: { color: 'rgba(204, 204, 0, 0.6)', width: 3 } },
     show: true,
   },
   {
@@ -23,7 +23,7 @@ export const initialState: LayerState[] = [
     name: 'Footway Roads',
     layer: 'transport_lines',
     type: ['footway', 'pedestrian'],
-    style: { stroke: { color: 'rgb(204, 255, 153, 0.6)', width: 3 } },
+    style: { stroke: { color: 'rgba(204, 255, 153, 0.6)', width: 3 } },
     show: true,
   },
   {
@@ -33,7 +33,7 @@ export const initialState: LayerState[] = [
     text: 'name',
     type: ['park'],
     style: {
-      fill: { color: 'rgb(204, 255, 153, 0.4)' },
+      fill: { color: 'rgba(204, 255, 153, 0.4)' },
       stroke: { color: 'rgb(34, 139, 34)', width: 2 },
     },
     show: false,
