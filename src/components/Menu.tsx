@@ -7,12 +7,9 @@ import {
   DrawerContent,
   Fab,
   List,
-  ListItem,
-  ListItemGraphic,
-  ListItemText,
-  ListItemPrimaryText,
 } from '@map-colonies/react-core';
-import { LayerState } from './View';
+import { useLayers } from '../providers/LayersProvider';
+import LayerItem from './LayerItem';
 
 const styles = {
   fab: {
@@ -21,21 +18,17 @@ const styles = {
   },
 };
 
-interface MenuProps {
-  layers: LayerState[];
-  updateVisibility: (index: number) => void;
-}
-
-const Menu: React.FC<MenuProps> = ({ layers, updateVisibility }) => {
+const Menu: React.FC = () => {
   const [open, setOpen] = useState(false);
+  const [layers] = useLayers();
   return (
     <>
       <Fab
         icon="layers"
-        onClick={() => setOpen(!open)}
+        onClick={(): void => setOpen(!open)}
         style={styles.fab}
       ></Fab>
-      <Drawer open={open} modal onClose={() => setOpen(false)}>
+      <Drawer open={open} modal onClose={(): void => setOpen(false)}>
         <DrawerHeader>
           <DrawerTitle>Vector Layers Catalog</DrawerTitle>
           <DrawerSubtitle>Layers:</DrawerSubtitle>
@@ -43,12 +36,7 @@ const Menu: React.FC<MenuProps> = ({ layers, updateVisibility }) => {
         <DrawerContent>
           <List>
             {layers.map((layer, i) => (
-              <ListItem key={i} onClick={() => updateVisibility(i)}>
-                <ListItemGraphic icon={layer.show ? 'check' : ''} />
-                <ListItemText>
-                  <ListItemPrimaryText>{layer.name}</ListItemPrimaryText>
-                </ListItemText>
-              </ListItem>
+              <LayerItem key={i} layer={layer} index={i} />
             ))}
           </List>
         </DrawerContent>
