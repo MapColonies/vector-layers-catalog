@@ -1,0 +1,19 @@
+{
+  "raster": {
+    "type": "wmts",
+    "params": {
+      "attributions": "Tiles © ArcGIS",
+      "url": "https://wxs.ign.fr/pratique/geoportail/wmts",
+      "layer": "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+      "projection": "EPSG:3857",
+      "style": "normal",
+      "matrixSet": "PM",
+      "format": "image/jpeg"
+    }
+  },
+  "mvt": {
+    "params": {
+      "url": "http://localhost:9090/maps/osm/{z}/{x}/{y}.pbf"
+    }
+  }
+}

@@ -1,21 +1,31 @@
 import React, { useMemo } from 'react';
 import {
+  getWMSOptions,
+  getWMTSOptions,
+  getXYZOptions,
+  getMVTOptions,
+  WMSOptionParams,
+  WMTSOptionParams,
+  XYZOptionParams,
   Map as OLMap,
   TileLayer,
+  VectorTileLayer,
+  TileWMS,
+  TileWMTS,
   TileXYZ,
-} from '@map-colonies/react-components';
-import { VectorTileLayer } from '@map-colonies/react-components/dist/ol-map/layers/vector-tile-layer';
-import {
-  getMVTOptions,
   MVTSource,
-} from '@map-colonies/react-components/dist/ol-map/source/mvt';
-import { Proj } from '@map-colonies/react-components/dist/ol-map/projections';
+  Proj,
+} from '@map-colonies/react-components';
 import { StyleFunction, Options as StyleOptions } from 'ol/style/Style';
 import { Style, Circle, Fill, Stroke, Text } from 'ol/style';
 import { LayerState, Shape } from '../model/layerTypes';
 import { useLayers } from '../providers/LayersProvider';
 import { iconFactory } from '../utils/iconFactory';
+import { Config, RasterConfig, RasterType } from '../model/configType';
 import VectorInfo from './VectorInfo';
+import { Options as XYZOptions } from 'ol/source/XYZ';
+import { Options as WMTSOptions } from 'ol/source/WMTS';
+import { Options as WMSOptions } from 'ol/source/TileWMS';
 
 const styles = {
   map: {
@@ -24,13 +34,6 @@ const styles = {
     position: 'fixed' as const,
   },
 };
-
-const xyzOptions = {
-  url: process.env.REACT_APP_XYZ_URL,
-};
-const mvtOptions = getMVTOptions({
-  url: process.env.REACT_APP_MVT_URL as string,
-});
 
 const createStyle = (layer: LayerState): Style => {
   let options: StyleOptions;
@@ -98,8 +101,24 @@ const getStyleFunc = (layers: LayerState[], styles: Style[]): StyleFunction => {
   return func;
 };
 
-const Map: React.FC = () => {
+const getRasterOptions = ({ type, params }: RasterConfig) => {
+  switch (type) {
+    case RasterType.XYZ:
+      return getXYZOptions(params as XYZOptionParams);
+    case RasterType.WMS:
+      return getWMSOptions(params as WMSOptionParams);
+    case RasterType.WMTS:
+      return getWMTSOptions(params as WMTSOptionParams);
+  }
+};
+
+interface MapProps {
+  config: Config;
+}
+
+const Map: React.FC<MapProps> = ({ config }) => {
   const [layers] = useLayers();
+
   const layersString = JSON.stringify(layers);
   const styleFunc = useMemo(() => {
     const styles = layers.map((layer) => createStyle(layer));
@@ -107,14 +126,29 @@ const Map: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layersString]);
 
+  const options = useMemo(
+    () => ({
+      raster: getRasterOptions(config.raster),
+      mvt: getMVTOptions(config.mvt.params),
+    }),
+    [config]
+  );
+
+  const { type } = config.raster;
   return (
     <div style={styles.map}>
       <OLMap projection={Proj.WEB_MERCATOR}>
         <TileLayer>
-          <TileXYZ options={xyzOptions} />
+          {type === RasterType.XYZ ? (
+            <TileXYZ options={options.raster as XYZOptions} />
+          ) : type === RasterType.WMS ? (
+            <TileWMS options={options.raster as WMSOptions} />
+          ) : (
+            <TileWMTS options={options.raster as WMTSOptions} />
+          )}
         </TileLayer>
         <VectorTileLayer style={styleFunc}>
-          <MVTSource options={mvtOptions} />
+          <MVTSource options={options.mvt} />
         </VectorTileLayer>
         <VectorInfo />
       </OLMap>

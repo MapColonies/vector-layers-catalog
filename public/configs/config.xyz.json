@@ -1,0 +1,13 @@
+{
+  "raster": {
+    "type": "xyz",
+    "params": {
+      "url": "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+    }
+  },
+  "mvt": {
+    "params": {
+      "url": "http://localhost:9090/maps/osm/{z}/{x}/{y}.pbf"
+    }
+  }
+}
