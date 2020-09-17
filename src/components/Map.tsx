@@ -18,14 +18,14 @@ import {
 } from '@map-colonies/react-components';
 import { StyleFunction, Options as StyleOptions } from 'ol/style/Style';
 import { Style, Circle, Fill, Stroke, Text } from 'ol/style';
+import { Options as XYZOptions } from 'ol/source/XYZ';
+import { Options as WMTSOptions } from 'ol/source/WMTS';
+import { Options as WMSOptions } from 'ol/source/TileWMS';
 import { LayerState, Shape } from '../model/layerTypes';
 import { useLayers } from '../providers/LayersProvider';
 import { iconFactory } from '../utils/iconFactory';
 import { Config, RasterConfig, RasterType } from '../model/configType';
 import VectorInfo from './VectorInfo';
-import { Options as XYZOptions } from 'ol/source/XYZ';
-import { Options as WMTSOptions } from 'ol/source/WMTS';
-import { Options as WMSOptions } from 'ol/source/TileWMS';
 
 const styles = {
   map: {
@@ -101,7 +101,10 @@ const getStyleFunc = (layers: LayerState[], styles: Style[]): StyleFunction => {
   return func;
 };
 
-const getRasterOptions = ({ type, params }: RasterConfig) => {
+const getRasterOptions = ({
+  type,
+  params,
+}: RasterConfig): XYZOptions | WMSOptions | WMTSOptions => {
   switch (type) {
     case RasterType.XYZ:
       return getXYZOptions(params as XYZOptionParams);
