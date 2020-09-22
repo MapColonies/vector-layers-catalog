@@ -1,0 +1,16 @@
+{
+  "raster": {
+    "type": "wms",
+    "params": {
+      "url": "https://ahocevar.com/geoserver/wms",
+      "params": { "LAYERS": "ne:NE1_HR_LC_SR_W_DR", "TILED": true },
+      "serverType": "geoserver",
+      "transition": 0.5
+    }
+  },
+  "mvt": {
+    "params": {
+      "url": "http://localhost:9090/maps/osm/{z}/{x}/{y}.pbf"
+    }
+  }
+}

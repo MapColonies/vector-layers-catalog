@@ -1,0 +1,17 @@
+{
+  "raster": {
+    "type": "wmts",
+    "params": {
+      "attributions": "Tiles © ArcGIS",
+      "url": "https://services.arcgisonline.com/arcgis/rest/services/Demographics/USA_Population_Density/MapServer/WMTS/",
+      "layer": "0",
+      "projection": "EPSG:3857",
+      "format": "image/png"
+    }
+  },
+  "mvt": {
+    "params": {
+      "url": "http://localhost:9090/maps/osm/{z}/{x}/{y}.pbf"
+    }
+  }
+}
